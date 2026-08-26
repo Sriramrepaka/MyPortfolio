@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sriram Repaka | Electronics & Embedded Systems Engineer</title>
+  <meta name="description" content="Portfolio of Sriram Repaka - Electronics & Embedded Systems Engineer specializing in Embedded Firmware (C/C++, RTOS, Linux), Robotics & Vision (ROS2, LiDAR), and Mixed-Signal IC Design.">
+  
+  <!-- Modern Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Vector Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dark-theme">
+
+  <!-- =========================================================================
+       SUBTLE SIDE PCB COPPER TRACES & DECALS (Fixed Left & Right viewport rails)
+       SMD Resistors and Transistors placed inline with vertical copper traces
+       ========================================================================= -->
+  <aside class="pcb-side-rail rail-left" aria-hidden="true">
+    <svg class="pcb-rail-svg" viewBox="0 0 54 900" fill="none" preserveAspectRatio="none">
+      <!-- Ground Plane Edge & Classic PCB Green Track -->
+      <line x1="6" y1="0" x2="6" y2="900" stroke="rgba(16, 185, 129, 0.25)" stroke-width="1.5" stroke-dasharray="8 4" />
+      <line x1="16" y1="0" x2="16" y2="900" stroke="rgba(255, 255, 255, 0.12)" stroke-width="1" />
+      
+      <!-- Copper Routing Traces with 45-degree bends -->
+      <path id="left-trace-path" d="M16 110 L28 130 L28 175 M28 193 L28 240 L16 260 L16 380 L32 410 L32 540 L16 570 L16 850" stroke="rgba(16, 185, 129, 0.4)" stroke-width="1.8" />
+      <path d="M24 160 L36 180 L36 310 L24 330 L24 600 L36 620 L36 740 L24 760" stroke="rgba(56, 189, 248, 0.25)" stroke-width="1.2" />
+      
+      <!-- Rare Ambient Current Pulse on Left Trace -->
+      <circle id="pulse-left-1" class="pcb-current-pulse pulse-green" r="3.5">
+        <animateMotion dur="7s" repeatCount="indefinite" path="M16 110 L28 130 L28 240 L16 260 L16 380 L32 410 L32 540 L16 570 L16 850" keyTimes="0; 0.2; 1" keyPoints="0; 1; 1" calcMode="linear" />
+      </circle>
+
+      <!-- Aesthetic SMT Resistor Decal R1 (0805) - ROTATED 90 DEGREES (INLINE WITH TRACE AT X=28) -->
+      <g transform="translate(24, 175)">
+        <rect x="0" y="0" width="8" height="18" rx="1.5" fill="#0f172a" stroke="rgba(16, 185, 129, 0.6)" stroke-width="0.8" />
+        <!-- Silver End Caps Inline with Vertical Trace -->
+        <rect x="0" y="0" width="8" height="3.5" rx="0.5" fill="#cbd5e1" />
+        <rect x="0" y="14.5" width="8" height="3.5" rx="0.5" fill="#cbd5e1" />
+        <!-- Vertical label -->
+        <text x="5" y="11" fill="rgba(16, 185, 129, 0.9)" font-size="4.5" font-family="'Fira Code', monospace" transform="rotate(90 5 11)">10k</text>
+      </g>
+
+      <!-- Aesthetic SMT SOT-23 Transistor Decal Q1 -->
+      <g transform="translate(16, 480)">
+        <rect x="2" y="3" width="14" height="10" rx="1.5" fill="#0f172a" stroke="rgba(16, 185, 129, 0.6)" stroke-width="0.8" />
+        <rect x="0" y="4.5" width="2" height="2" fill="#cbd5e1" />
+        <rect x="0" y="9.5" width="2" height="2" fill="#cbd5e1" />
+        <rect x="16" y="7" width="2" height="2" fill="#cbd5e1" />
+        <text x="5" y="10" fill="rgba(16, 185, 129, 0.9)" font-size="4.5" font-family="'Fira Code', monospace">Q1</text>
+      </g>
+
+      <!-- Test Points & Vias -->
+      <circle cx="28" cy="130" r="3.5" fill="#070a0f" stroke="#10b981" stroke-width="1.5" />
+      <circle cx="28" cy="240" r="3.5" fill="#070a0f" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" />
+      <circle cx="32" cy="410" r="3.5" fill="#070a0f" stroke="#10b981" stroke-width="1.5" />
+      <circle cx="32" cy="540" r="3.5" fill="#070a0f" stroke="rgba(56,189,248,0.5)" stroke-width="1.5" />
+
+      <!-- Silkscreen Markings -->
+      <text x="32" y="75" fill="rgba(255,255,255,0.2)" font-size="7" font-family="'Fira Code', monospace" transform="rotate(90 32 75)">TP_GND_L1</text>
+      <text x="32" y="290" fill="rgba(16,185,129,0.4)" font-size="7" font-family="'Fira Code', monospace" transform="rotate(90 32 290)">PCB_MASK_GRN</text>
+      <text x="32" y="690" fill="rgba(255,255,255,0.2)" font-size="7" font-family="'Fira Code', monospace" transform="rotate(90 32 690)">SR_REV_2.4</text>
+    </svg>
+  </aside>
+
+  <aside class="pcb-side-rail rail-right" aria-hidden="true">
+    <svg class="pcb-rail-svg" viewBox="0 0 54 900" fill="none" preserveAspectRatio="none">
+      <!-- Differential Bus Traces -->
+      <line x1="46" y1="0" x2="46" y2="900" stroke="rgba(16, 185, 129, 0.25)" stroke-width="1.5" stroke-dasharray="10 5" />
+      <line x1="36" y1="0" x2="36" y2="900" stroke="rgba(255, 255, 255, 0.12)" stroke-width="1" />
+      
+      <!-- Serpentine & Angled Copper Bus -->
+      <path id="right-trace-path" d="M36 80 L20 100 L20 145 M20 163 L20 220 L36 240 L36 380 L18 410 L18 540 L36 570 L36 820" stroke="rgba(16, 185, 129, 0.4)" stroke-width="1.8" />
+      <path d="M28 140 L12 160 L12 290 L28 310 L28 590 L14 610 L14 730 L28 750" stroke="rgba(56, 189, 248, 0.25)" stroke-width="1.2" />
+
+      <!-- Rare Ambient Current Pulse on Right Trace -->
+      <circle id="pulse-right-1" class="pcb-current-pulse pulse-cyan" r="3.5">
+        <animateMotion dur="8.5s" repeatCount="indefinite" path="M36 80 L20 100 L20 220 L36 240 L36 380 L18 410 L18 540 L36 570 L36 820" keyTimes="0; 0.25; 1" keyPoints="0; 1; 1" calcMode="linear" />
+      </circle>
+
+      <!-- Aesthetic SMT Resistor Decal R2 (0805) - ROTATED 90 DEGREES (INLINE WITH TRACE AT X=20) -->
+      <g transform="translate(16, 145)">
+        <rect x="0" y="0" width="8" height="18" rx="1.5" fill="#0f172a" stroke="rgba(16, 185, 129, 0.6)" stroke-width="0.8" />
+        <!-- Silver End Caps Inline with Vertical Trace -->
+        <rect x="0" y="0" width="8" height="3.5" rx="0.5" fill="#cbd5e1" />
+        <rect x="0" y="14.5" width="8" height="3.5" rx="0.5" fill="#cbd5e1" />
+        <!-- Vertical label -->
+        <text x="5" y="11" fill="rgba(16, 185, 129, 0.9)" font-size="4.5" font-family="'Fira Code', monospace" transform="rotate(90 5 11)">120R</text>
+      </g>
+
+      <!-- Test Pads & Vias -->
+      <circle cx="20" cy="100" r="3.5" fill="#070a0f" stroke="#10b981" stroke-width="1.5" />
+      <circle cx="20" cy="220" r="3.5" fill="#070a0f" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" />
+      <circle cx="18" cy="410" r="3.5" fill="#070a0f" stroke="#10b981" stroke-width="1.5" />
+      <circle cx="18" cy="540" r="3.5" fill="#070a0f" stroke="rgba(56,189,248,0.5)" stroke-width="1.5" />
+
+      <!-- Silkscreen Labels -->
+      <text x="16" y="55" fill="rgba(255,255,255,0.2)" font-size="7" font-family="'Fira Code', monospace" transform="rotate(90 16 55)">CAN_BUS_DIFF</text>
+      <text x="16" y="260" fill="rgba(255,255,255,0.2)" font-size="7" font-family="'Fira Code', monospace" transform="rotate(90 16 260)">SWD_TRACE</text>
+      <text x="16" y="470" fill="rgba(16,185,129,0.4)" font-size="7" font-family="'Fira Code', monospace" transform="rotate(90 16 470)">LIDAR_RX</text>
+      <text x="16" y="680" fill="rgba(255,255,255,0.2)" font-size="7" font-family="'Fira Code', monospace" transform="rotate(90 16 680)">STATUS_OK</text>
+    </svg>
+  </aside>
+
+  <!-- Ambient Solder-Mask Background Elements -->
+  <div class="circuit-bg-grid" aria-hidden="true"></div>
+  <div class="circuit-bg-glow" aria-hidden="true"></div>
+
+  <!-- =========================================================================
+       HEADER / NAVBAR (Minimalist, Clean Toolbar)
+       ========================================================================= -->
+  <header class="site-header" id="site-header">
+    <div class="header-container">
+      <a href="#hero" class="brand-logo" id="brand-logo">
+        <div class="chip-badge-icon">
+          <i data-lucide="cpu"></i>
+        </div>
+        <span class="brand-text">SRIRAM REPAKA</span>
+      </a>
+
+      <!-- Navigation Links -->
+      <nav class="desktop-nav" id="desktop-nav">
+        <a href="#hero" class="nav-link">About</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#experience" class="nav-link">Experience</a>
+        <a href="#skills" class="nav-link">Skills</a>
+        <a href="#education" class="nav-link">Education</a>
+      </nav>
+
+      <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation menu">
+        <i data-lucide="menu" id="menu-icon"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div class="mobile-nav-drawer" id="mobile-nav-drawer">
+      <a href="#hero" class="mobile-nav-link">About</a>
+      <a href="#projects" class="mobile-nav-link">Projects</a>
+      <a href="#experience" class="mobile-nav-link">Experience</a>
+      <a href="#skills" class="mobile-nav-link">Skills</a>
+      <a href="#education" class="mobile-nav-link">Education</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- =========================================================================
+         HERO SECTION: 2-COLUMN (LEFT: ABOUT & PROFILE | RIGHT: CLEAN MINIMAL VECTOR IC)
+         ========================================================================= -->
+    <section class="hero-section" id="hero">
+      <div class="hero-container">
+        
+        <!-- LEFT COLUMN: Sriram Profile, Clean Minimal About (No Box Card) & Socials -->
+        <div class="hero-left-column">
+          
+          <!-- Major Heading in Pure Crisp White -->
+          <h1 class="hero-headline">
+            Hi, I'm <span class="text-white">Sriram Repaka</span>.
+          </h1>
+
+          <div class="hero-badge-row">
+            <span class="tech-chip-tag">
+              <i data-lucide="cpu"></i> ELECTRONICS & EMBEDDED SYSTEMS ENGINEER
+            </span>
+          </div>
+
+          <p class="hero-subheadline">
+            M.Sc. Electronics Engineering (Microsystems) candidate at Hochschule Bremen & Ex-Embedded Software Developer at Capgemini Engineering (GoPro).
+          </p>
+
+          <!-- Simple, Minimalistic About Section (BOX REMOVED - Naturally Floating) -->
+          <div class="about-content-floating">
+            <p class="about-intro">
+              I specialize in <strong>Embedded Firmware</strong> (C/C++, FreeRTOS, Embedded Linux, UART, CAN Bus, SPI, I2C), <strong>Robotics & Vision</strong> (ROS/ROS2, PyTorch, OpenCV, LiDAR), and <strong>Analog & Mixed-Signal IC Design</strong> (130nm SG13G2, Xschem, ngspice).
+            </p>
+
+            <div class="profile-quick-stats">
+              <div class="stat-pill">
+                <i data-lucide="map-pin"></i> <span>Bremen, Germany</span>
+              </div>
+              <div class="stat-pill">
+                <i data-lucide="graduation-cap"></i> <span>Hochschule Bremen MSc.</span>
+              </div>
+              <div class="stat-pill">
+                <i data-lucide="briefcase"></i> <span>Ex-Capgemini (GoPro)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sriram: Direct Contact & Social Links Bar (Fixed Clean @ Symbol) -->
+          <div class="socials-bar-minimal">
+            <a href="mailto:sriramrepaka29@gmail.com" class="social-contact-pill" title="Email Sriram">
+              <i data-lucide="mail"></i>
+              <span class="email-clean-text">sriramrepaka29@gmail.com</span>
+            </a>
+            <a href="https://linkedin.com/in/sriram-repaka" target="_blank" rel="noopener noreferrer" class="social-icon-btn" title="LinkedIn Profile">
+              <i data-lucide="linkedin"></i>
+            </a>
+            <a href="https://github.com/Sriramrepaka" target="_blank" rel="noopener noreferrer" class="social-icon-btn" title="GitHub Profile">
+              <i data-lucide="github"></i>
+            </a>
+            <a href="tel:+4917632352878" class="social-icon-btn" title="Call (+49) 176 32352878">
+              <i data-lucide="phone"></i>
+            </a>
+          </div>
+
+          <!-- Hero Action CTA -->
+          <div class="hero-cta-actions">
+            <a href="#projects" class="btn primary-btn-glow" id="btn-explore-projects">
+              <span>Explore Projects</span>
+              <i data-lucide="arrow-down"></i>
+            </a>
+          </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN: PURE MINIMALIST VECTOR IC (GOLD/COPPER PINS, CLEAN SURFACE, OUTER TRACES) -->
+        <div class="hero-right-column">
+          <div class="vector-ic-seamless" id="vector-ic-container">
+            <canvas id="ic-vector-canvas"></canvas>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Slide Indicator -->
+      <a href="#projects" class="hero-scroll-indicator" aria-label="Scroll down to projects">
+        <span class="scroll-text">SLIDE TO VIEW PROJECTS</span>
+        <div class="scroll-mouse">
+          <div class="scroll-wheel"></div>
+        </div>
+      </a>
+    </section>
+
+    <!-- =========================================================================
+         PROJECTS SHOWCASE SECTION (STREAMLINED - NO BOM BUTTONS)
+         ========================================================================= -->
+    <section class="projects-section" id="projects">
+      <div class="section-container">
+        
+        <div class="section-header reveal-on-scroll">
+          <div class="section-tag">
+            <i data-lucide="folder-git-2"></i> HARDWARE, ROBOTICS & IC PROJECTS
+          </div>
+          <h2 class="section-heading text-white">
+            Selected Engineering Projects
+          </h2>
+          <p class="section-subtext">
+            Practical hardware enclosures, autonomous robotics vision systems, and analog microelectronic filter designs.
+          </p>
+
+          <!-- Category Filter Tabs -->
+          <div class="filter-tabs-container">
+            <button class="filter-pill-btn active" data-filter="all">All Projects [5]</button>
+            <button class="filter-pill-btn" data-filter="embedded">Embedded & Hardware [2]</button>
+            <button class="filter-pill-btn" data-filter="robotics">Robotics & AI [2]</button>
+            <button class="filter-pill-btn" data-filter="ic">Analog IC Design [1]</button>
+          </div>
+        </div>
+
+        <!-- Project Cards Grid -->
+        <div class="projects-grid" id="projects-grid">
+          
+          <!-- PROJECT 1: Smart Desktop Assistant -->
+          <article class="project-card reveal-on-scroll" data-category="embedded">
+            <div class="project-card-image-wrap">
+              <img src="assets/Desktop_gadget.jpeg" alt="Smart Desktop Assistant Hardware" class="project-thumbnail" loading="lazy">
+              <div class="image-overlay-gradient"></div>
+              <div class="card-badges-floating">
+                <span class="badge-chip green"><i data-lucide="cpu"></i> ESP32</span>
+                <span class="badge-chip silver"><i data-lucide="box"></i> FUSION 360</span>
+              </div>
+            </div>
+
+            <div class="project-card-content">
+              <div class="project-meta-row">
+                <span class="project-timeline">06/2026 – Present</span>
+              </div>
+              <h3 class="project-title text-white">Smart Desktop Assistant & Custom Hardware Enclosure</h3>
+              <p class="project-desc">
+                Designed an ESP32-driven desktop companion featuring task logging, Pomodoro timer, and Wi-Fi synchronization. Modeled a custom ergonomic enclosure with precise speaker/battery mounts in Fusion 360 and 3D-printed the final chassis.
+              </p>
+
+              <div class="project-tags-list">
+                <span class="proj-tag">ESP32</span>
+                <span class="proj-tag">Fusion 360</span>
+                <span class="proj-tag">3D Printing</span>
+                <span class="proj-tag">Wi-Fi Sync</span>
+                <span class="proj-tag">C/C++</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- PROJECT 2: Analog IC Filter Design -->
+          <article class="project-card reveal-on-scroll" data-category="ic">
+            <div class="project-card-image-wrap">
+              <img src="assets/icdesign.jpg" alt="Analog IC Filter Design" class="project-thumbnail" loading="lazy">
+              <div class="image-overlay-gradient"></div>
+              <div class="card-badges-floating">
+                <span class="badge-chip cyan"><i data-lucide="layers"></i> 130nm SG13G2</span>
+                <span class="badge-chip green"><i data-lucide="activity"></i> 5T-OTA</span>
+              </div>
+            </div>
+
+            <div class="project-card-content">
+              <div class="project-meta-row">
+                <span class="project-timeline">03/2026 – 07/2026 (Hochschule Bremen)</span>
+              </div>
+              <h3 class="project-title text-white">Analog IC Filter Design: 4th-Order Linkwitz-Riley</h3>
+              <p class="project-desc">
+                Sized and simulated a 2-stage 5T-OTA utilizing the open-source 130nm SG13G2 process in Xschem and ngspice. Performed comprehensive Process, Voltage, Temperature (PVT) parameter and stability analysis.
+              </p>
+
+              <div class="project-tags-list">
+                <span class="proj-tag">130nm BiCMOS</span>
+                <span class="proj-tag">Xschem</span>
+                <span class="proj-tag">ngspice</span>
+                <span class="proj-tag">5T-OTA</span>
+                <span class="proj-tag">PVT Analysis</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- PROJECT 3: AI-Powered Autonomous JetBot -->
+          <article class="project-card reveal-on-scroll" data-category="robotics">
+            <div class="project-card-image-wrap">
+              <img src="assets/jetbot.jpeg" alt="AI Autonomous JetBot" class="project-thumbnail" loading="lazy">
+              <div class="image-overlay-gradient"></div>
+              <div class="card-badges-floating">
+                <span class="badge-chip green"><i data-lucide="bot"></i> JETSON NANO</span>
+                <span class="badge-chip cyan"><i data-lucide="radar"></i> LIDAR + ROS2</span>
+              </div>
+            </div>
+
+            <div class="project-card-content">
+              <div class="project-meta-row">
+                <span class="project-timeline">10/2025 – 01/2026 (Hochschule Bremen)</span>
+              </div>
+              <h3 class="project-title text-white">AI-Powered Autonomous JetBot</h3>
+              <p class="project-desc">
+                Built an autonomous lane-following robot with obstacle avoidance using NVIDIA Jetson Nano, LiDAR, and IMU. Deployed real-time SegNet and DetectNet deep learning models for onboard inference and dynamic boundary detection.
+              </p>
+
+              <div class="project-tags-list">
+                <span class="proj-tag">Jetson Nano</span>
+                <span class="proj-tag">LiDAR</span>
+                <span class="proj-tag">PyTorch</span>
+                <span class="proj-tag">ROS / ROS2</span>
+                <span class="proj-tag">SegNet / DetectNet</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- PROJECT 4: Autonomous BRIO Maze Automation -->
+          <article class="project-card reveal-on-scroll" data-category="robotics">
+            <div class="project-card-image-wrap">
+              <img src="assets/Brio.gif" alt="Autonomous BRIO Maze Automation" class="project-thumbnail" loading="lazy">
+              <div class="image-overlay-gradient"></div>
+              <div class="card-badges-floating">
+                <span class="badge-chip green"><i data-lucide="eye"></i> OPENCV ARUCO</span>
+                <span class="badge-chip cyan"><i data-lucide="activity"></i> DYNAMIXEL SERVOS</span>
+              </div>
+            </div>
+
+            <div class="project-card-content">
+              <div class="project-meta-row">
+                <span class="project-timeline">10/2024 – 01/2025 (Hochschule Bremen)</span>
+              </div>
+              <h3 class="project-title text-white">Autonomous BRIO Maze Automation</h3>
+              <p class="project-desc">
+                Automated a physical tilting wooden labyrinth maze game using real-time ArUco marker pose estimation in OpenCV. Developed a closed-loop Python control algorithm driving precision Dynamixel servos for ball navigation.
+              </p>
+
+              <div class="project-tags-list">
+                <span class="proj-tag">OpenCV</span>
+                <span class="proj-tag">ArUco Tracking</span>
+                <span class="proj-tag">Dynamixel Servos</span>
+                <span class="proj-tag">Python</span>
+                <span class="proj-tag">PID Control</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- PROJECT 5: Assistive LiDAR Navigation Aid -->
+          <article class="project-card reveal-on-scroll" data-category="embedded">
+            <div class="project-card-image-wrap">
+              <img src="assets/project-iot-gateway.jpg" alt="Assistive LiDAR Navigation Aid" class="project-thumbnail" loading="lazy">
+              <div class="image-overlay-gradient"></div>
+              <div class="card-badges-floating">
+                <span class="badge-chip green"><i data-lucide="radio"></i> 3D LIDAR TOF</span>
+                <span class="badge-chip silver"><i data-lucide="shield"></i> PNEUMATIC DAMPER</span>
+              </div>
+            </div>
+
+            <div class="project-card-content">
+              <div class="project-meta-row">
+                <span class="project-timeline">08/2021 – 05/2022 (B.Tech Thesis)</span>
+              </div>
+              <h3 class="project-title text-white">Assistive LiDAR Navigation Aid</h3>
+              <p class="project-desc">
+                Engineered a smart walking cane for the visually impaired integrating 3D LiDAR Time-of-Flight depth mapping. Designed a custom pneumatic shock absorber mechanism to stabilize camera footage on rough terrain.
+              </p>
+
+              <div class="project-tags-list">
+                <span class="proj-tag">3D LiDAR ToF</span>
+                <span class="proj-tag">Pneumatic Damper</span>
+                <span class="proj-tag">Embedded C</span>
+                <span class="proj-tag">Haptic Guidance</span>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         PROFESSIONAL EXPERIENCE SECTION
+         ========================================================================= -->
+    <section class="experience-section" id="experience">
+      <div class="section-container">
+        
+        <div class="section-header reveal-on-scroll">
+          <div class="section-tag">
+            <i data-lucide="briefcase"></i> CAREER TIMELINE
+          </div>
+          <h2 class="section-heading text-white">
+            Professional Experience
+          </h2>
+          <p class="section-subtext">
+            Proven track record in camera application firmware, embedded protocols, and hardware debugging.
+          </p>
+        </div>
+
+        <div class="experience-timeline reveal-on-scroll">
+          
+          <!-- Experience Item 1: Capgemini Engineering (GoPro) -->
+          <div class="timeline-item">
+            <div class="timeline-marker">
+              <div class="marker-dot"></div>
+              <div class="marker-line"></div>
+            </div>
+            <div class="timeline-content-card">
+              <div class="experience-card-header">
+                <div>
+                  <h3 class="exp-role text-white">Embedded Software Developer <span class="exp-level">| Associate II</span></h3>
+                  <div class="exp-company-row">
+                    <span class="exp-company">Capgemini Engineering (Client: GoPro)</span>
+                    <span class="exp-location"><i data-lucide="map-pin"></i> Bangalore, India</span>
+                  </div>
+                </div>
+                <span class="exp-date-pill">08/2022 – 03/2024</span>
+              </div>
+              <ul class="exp-bullets-list">
+                <li>Developed and modified production application-layer (APPC) camera firmware features in C.</li>
+                <li>Conducted Root Cause Analysis (RCA) for complex system bugs by evaluating real-time UART logs via Tera Term.</li>
+                <li>Utilized hardware debug boards and logic analyzers to trace software execution and hardware interactions.</li>
+                <li>Managed bug life-cycles in JIRA, maintained version control in Git, and conducted code reviews with lead Architect.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Experience Item 2: Cellerite Systems -->
+          <div class="timeline-item">
+            <div class="timeline-marker">
+              <div class="marker-dot"></div>
+            </div>
+            <div class="timeline-content-card">
+              <div class="experience-card-header">
+                <div>
+                  <h3 class="exp-role text-white">R&D Embedded Systems Intern</h3>
+                  <div class="exp-company-row">
+                    <span class="exp-company">Cellerite Systems</span>
+                    <span class="exp-location"><i data-lucide="map-pin"></i> Hyderabad, India</span>
+                  </div>
+                </div>
+                <span class="exp-date-pill">08/2020 – 10/2020</span>
+              </div>
+              <ul class="exp-bullets-list">
+                <li>Prototyped an EV charging communication and current/voltage monitoring system using PIC18F458 microcontroller.</li>
+                <li>Implemented CAN bus communication protocol to enable real-time device-to-station data exchange.</li>
+                <li>Simulated microcontroller hardware and CAN protocol execution using Proteus and MPLAB IDE.</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         TECHNICAL PROFILE & SKILLS SECTION
+         ========================================================================= -->
+    <section class="skills-section" id="skills">
+      <div class="section-container">
+        
+        <div class="section-header reveal-on-scroll">
+          <div class="section-tag">
+            <i data-lucide="cpu"></i> TECHNICAL PROFILE
+          </div>
+          <h2 class="section-heading text-white">
+            Skills & Tooling
+          </h2>
+          <p class="section-subtext">
+            Core technical competencies across firmware development, robotics vision, and hardware engineering.
+          </p>
+        </div>
+
+        <div class="skills-grid reveal-on-scroll">
+          
+          <!-- Category 1: Firmware & Embedded -->
+          <div class="skill-category-card">
+            <div class="skill-icon-wrap">
+              <i data-lucide="code-2"></i>
+            </div>
+            <h3 class="skill-category-title text-white">Firmware & Embedded</h3>
+            <p class="skill-category-desc">Low-level embedded software, RTOS scheduling, and hardware communication busses.</p>
+            <div class="skill-tags-cloud">
+              <span class="skill-badge">C</span>
+              <span class="skill-badge">Python</span>
+              <span class="skill-badge">Embedded Linux</span>
+              <span class="skill-badge">RTOS / FreeRTOS</span>
+              <span class="skill-badge">UART</span>
+              <span class="skill-badge">CAN Bus</span>
+              <span class="skill-badge">SPI</span>
+              <span class="skill-badge">I2C</span>
+              <span class="skill-badge">SystemVerilog</span>
+            </div>
+          </div>
+
+          <!-- Category 2: Robotics & Vision -->
+          <div class="skill-category-card">
+            <div class="skill-icon-wrap">
+              <i data-lucide="bot"></i>
+            </div>
+            <h3 class="skill-category-title text-white">Robotics & Vision</h3>
+            <p class="skill-category-desc">Computer vision pipelines, neural network edge inference, and sensor fusion.</p>
+            <div class="skill-tags-cloud">
+              <span class="skill-badge">ROS / ROS2</span>
+              <span class="skill-badge">PyTorch</span>
+              <span class="skill-badge">OpenCV</span>
+              <span class="skill-badge">SegNet / DetectNet</span>
+              <span class="skill-badge">LiDAR Processing</span>
+              <span class="skill-badge">ArUco Pose Tracking</span>
+            </div>
+          </div>
+
+          <!-- Category 3: Hardware & Tools -->
+          <div class="skill-category-card">
+            <div class="skill-icon-wrap">
+              <i data-lucide="layers"></i>
+            </div>
+            <h3 class="skill-category-title text-white">Hardware & Tools</h3>
+            <p class="skill-category-desc">Microcontroller development boards, CAD design, simulation, and instrumentation.</p>
+            <div class="skill-tags-cloud">
+              <span class="skill-badge">ESP32</span>
+              <span class="skill-badge">Jetson Nano</span>
+              <span class="skill-badge">Raspberry Pi</span>
+              <span class="skill-badge">Fusion 360 (CAD/3D)</span>
+              <span class="skill-badge">LTSpice</span>
+              <span class="skill-badge">Proteus</span>
+              <span class="skill-badge">JIRA & Git</span>
+            </div>
+          </div>
+
+          <!-- Category 4: Languages & Communication -->
+          <div class="skill-category-card">
+            <div class="skill-icon-wrap">
+              <i data-lucide="globe"></i>
+            </div>
+            <h3 class="skill-category-title text-white">Languages & Core</h3>
+            <p class="skill-category-desc">Multilingual engineering communication and cross-functional team collaboration.</p>
+            <div class="skill-tags-cloud">
+              <span class="skill-badge highlight">English (C1 - Professional)</span>
+              <span class="skill-badge highlight">German (A2 - Intermediate)</span>
+              <span class="skill-badge highlight">Telugu (Native)</span>
+              <span class="skill-badge">Code Reviews</span>
+              <span class="skill-badge">Root Cause Analysis (RCA)</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         EDUCATION SECTION
+         ========================================================================= -->
+    <section class="education-section" id="education">
+      <div class="section-container">
+        
+        <div class="section-header reveal-on-scroll">
+          <div class="section-tag">
+            <i data-lucide="graduation-cap"></i> ACADEMIC BACKGROUND
+          </div>
+          <h2 class="section-heading text-white">
+            Higher Education
+          </h2>
+          <p class="section-subtext">
+            Specialized degrees in Microsystems, Robotics AI, Microprocessors, and Embedded Architectures.
+          </p>
+        </div>
+
+        <div class="education-grid reveal-on-scroll">
+          
+          <!-- Degree 1: M.Sc. Hochschule Bremen -->
+          <div class="education-card">
+            <div class="edu-card-top">
+              <div class="edu-icon-wrap">
+                <i data-lucide="graduation-cap"></i>
+              </div>
+              <span class="edu-badge">Current Grade: 1.7</span>
+            </div>
+            <h3 class="edu-degree text-white">M.Sc. in Electronics Engineering (Microsystems)</h3>
+            <div class="edu-school">Hochschule Bremen, Germany</div>
+            <div class="edu-timeline">10/2024 – Present</div>
+            <div class="edu-focus">
+              <strong>Core Focus:</strong> AI in Robotics, Advanced Hardware Verification, Image Processing, Mixed-Signal IC Design, MEMS.
+            </div>
+          </div>
+
+          <!-- Degree 2: B.Tech Mahindra Ecole Centrale -->
+          <div class="education-card">
+            <div class="edu-card-top">
+              <div class="edu-icon-wrap">
+                <i data-lucide="award"></i>
+              </div>
+              <span class="edu-badge">Grade: 2.0 (German eq.)</span>
+            </div>
+            <h3 class="edu-degree text-white">B.Tech. in Electrical and Electronics Engineering</h3>
+            <div class="edu-school">Mahindra École Centrale, India</div>
+            <div class="edu-timeline">08/2018 – 08/2022</div>
+            <div class="edu-focus">
+              <strong>Core Focus:</strong> Microprocessors, Computer Architecture, Embedded Systems, Internet of Things (IoT).
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================================================================
+       CLEAN MINIMALIST FOOTER (WITH DIRECT CONTACT LINKS)
+       ========================================================================= -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-left">
+        <span class="footer-brand">SRIRAM REPAKA</span>
+        <span class="footer-sub">&bull; Bremen, Germany</span>
+      </div>
+
+      <div class="footer-center">
+        <div class="footer-social-links">
+          <a href="mailto:sriramrepaka29@gmail.com" class="footer-link">
+            <i data-lucide="mail"></i> sriramrepaka29@gmail.com
+          </a>
+          <a href="https://linkedin.com/in/sriram-repaka" target="_blank" rel="noopener noreferrer" class="footer-link">
+            <i data-lucide="linkedin"></i> LinkedIn
+          </a>
+          <a href="https://github.com/Sriramrepaka" target="_blank" rel="noopener noreferrer" class="footer-link">
+            <i data-lucide="github"></i> GitHub
+          </a>
+          <a href="tel:+4917632352878" class="footer-link">
+            <i data-lucide="phone"></i> (+49) 176 32352878
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-right">
+        <a href="#hero" class="btn-back-to-top" title="Back to top">
+          <i data-lucide="arrow-up"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="circuit-vector.js"></script>
+  <script src="main.js"></script>
+  <script>
+   // Force icons to render immediately as a fallback
+   if (typeof lucide !== 'undefined') {
+     lucide.createIcons();
+   }
+  </script>
+</body>
+</html>
